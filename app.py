@@ -3,7 +3,7 @@ import openai
 import requests
 
 # Set your OpenAI API key
-openai.api_key = "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"
+openai.api_key = "OPEN-API-KEY"
 
 app = Flask(__name__)
 
