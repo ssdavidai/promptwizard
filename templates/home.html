@@ -1,22 +1,38 @@
 <!doctype html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <title>OpenAI Audio to Text Converter</title>
-  </head>
-  <body>
-    <h1>OpenAI Audio to Text Converter</h1>
-    <form method="POST" enctype="multipart/form-data">
-      <label for="audio_file">Audio File:</label>
-      <input type="file" name="audio_file" id="audio_file">
-      <br><br>
-      <label for="prompt">Prompt Text:</label>
-      <input type="text" name="prompt" id="prompt">
-      <br><br>
-      <input type="submit" value="Submit">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-BsU6DxU6+UBO6vjgrCJlB+f+D8pEdMGjHN9bziJluHsa+Q32RHg6frVzumPwFK76" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5 mb-3">OpenAI Audio to Text Converter</h1>
+    <form method="POST" enctype="multipart/form-data" class="mb-5">
+        <div class="mb-3">
+            <label for="audio_file" class="form-label">Audio File:</label>
+            <input type="file" class="form-control" id="audio_file" name="audio_file">
+        </div>
+        <div class="mb-3">
+            <label for="prompt" class="form-label">Prompt Text:</label>
+            <input type="text" class="form-control" id="prompt" name="prompt">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    {% if reply %}
+    <div class="alert alert-primary" role="alert">
+        <h2>Reply:</h2>
+        <p>{{ reply }}</p>
+    </div>
+    {% endif %}
+</div>
 
-      <h2>Reply:</h2>
-      <p>{{ reply }}</p>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-DU6nFgn1zQ2QJwL6+OV3Ll8GJeqg+rMbsyYG1ryKjQ9B5h5eu5zgZ5w5xHcL3qFW" crossorigin="anonymous"></script>
 
-  </body>
+</body>
 </html>
