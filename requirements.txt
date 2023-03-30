@@ -1,2 +1,4 @@
+Flask==2.1.2
 openai
+requests
 gunicorn==20.1.0
