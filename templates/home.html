@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <title>OpenAI Audio to Text Converter</title>
+  </head>
+  <body>
+    <h1>OpenAI Audio to Text Converter</h1>
+    <form method="POST" enctype="multipart/form-data">
+      <label for="audio_file">Audio File:</label>
+      <input type="file" name="audio_file" id="audio_file">
+      <br><br>
+      <label for="prompt">Prompt Text:</label>
+      <input type="text" name="prompt" id="prompt">
+      <br><br>
+      <input type="submit" value="Submit">
+    </form>
+
+      <h2>Reply:</h2>
+      <p>{{ reply }}</p>
+
+  </body>
+</html>
