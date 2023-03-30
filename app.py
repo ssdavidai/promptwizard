@@ -1,63 +1,48 @@
-import dash
-from dash import html
-from dash import dcc
-import plotly.graph_objs as go
+from flask import Flask, request, render_template
+import openai
+import requests
 
-########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='darkred'
-color2='orange'
-mytitle='Beer Comparison'
-tabtitle='beer!'
-myheading='Flying Dog Beers'
-label1='IBU'
-label2='ABV'
-githublink='https://github.com/austinlasseter/flying-dog-beers'
-sourceurl='https://www.flyingdog.com/beers/'
+# Set your OpenAI API key
+openai.api_key = "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"
 
-########### Set up the chart
-bitterness = go.Bar(
-    x=beers,
-    y=ibu_values,
-    name=label1,
-    marker={'color':color1}
-)
-alcohol = go.Bar(
-    x=beers,
-    y=abv_values,
-    name=label2,
-    marker={'color':color2}
-)
+app = Flask(__name__)
 
-beer_data = [bitterness, alcohol]
-beer_layout = go.Layout(
-    barmode='group',
-    title = mytitle
-)
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        # Get the audio file from the request object
+        audio_file = request.files['audio_file'].read()
 
-beer_fig = go.Figure(data=beer_data, layout=beer_layout)
+        # Upload the audio file to the server and get its URL
+        files = {'file': ('audio.mp3', audio_file)}
+        response = requests.post('https://api.myserver.com/upload', files=files)
+        audio_url = response.json()['url']
 
+        # Get the prompt text from the request object
+        prompt = request.form['prompt']
 
-########### Initiate the app
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
-app.title=tabtitle
+        # Translate the audio file to text
+        transcript = openai.Audio.translate("whisper-1", io.BytesIO(audio_file))
 
-########### Set up the layout
-app.layout = html.Div(children=[
-    html.H1(myheading),
-    dcc.Graph(
-        id='flyingdog',
-        figure=beer_fig
-    ),
-    html.A('Code on Github', href=githublink),
-    html.Br(),
-    html.A('Data Source', href=sourceurl),
-    ]
-)
+        # Use the transcript and prompt text as input for GPT-3.5-turbo
+        prompt_final = f"{prompt} {transcript}"
+        model_engine = "gpt-4"
+
+        response = openai.ChatCompletion.create(
+          model="gpt-4",
+          messages=[
+            {"role": "system", "content": "You are a scrum master who takes notes using markdown format using the Mermaid syntax."},
+            {"role": "user", "content": f"{prompt_final}"}
+          ]
+        )
+
+        reply = response['choices'][0]['message']['content']
+
+        # Pass the reply text to the template
+        return render_template('home.html', reply=reply)
+
+    # Render the upload form
+    return render_template('home.html')
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run(debug=True)
