@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-BsU6DxU6+UBO6vjgrCJlB+f+D8pEdMGjHN9bziJluHsa+Q32RHg6frVzumPwFK76" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-BsU6DxU6+UBO6vjgrCJlB+f+D8pEdMGjHN9bziJluHsa+Q32RHg6frVzumPwFK76" crossorigin="anonymous">
 
     <style>
         body {
@@ -23,36 +23,60 @@
             margin-bottom: 20px;
         }
 
+
+
         .alert {
             margin-top: 50px;
         }
+        
+         .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 50px;
+    font-size: 1.25rem;
+  }
+
+  .btn-primary.active {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+
+  .btn-primary:active, .btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+  }
     </style>
 
 </head>
 <body>
-<div class="container">
-    <h1 class="mt-5 mb-3">OpenAI Audio to Text Converter</h1>
-    <form method="POST" enctype="multipart/form-data" class="mb-5">
-        <div class="mb-3">
-            <label for="audio_file" class="form-label">Audio File:</label>
-            <input type="file" class="form-control" id="audio_file" name="audio_file">
-        </div>
-        <div class="mb-3">
-            <label for="prompt" class="form-label">Prompt Text:</label>
-            <input type="text" class="form-control" id="prompt" name="prompt">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-    {% if reply %}
-    <div class="alert alert-primary" role="alert">
-        <h2>Reply:</h2>
-        <p>{{ reply }}</p>
+<div class="container my-5">
+  <h1 class="text-center mb-4">Upload Audio and Generate Content</h1>
+  <form method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
+    <div class="input-group mb-3">
+      <input type="file" class="form-control" name="audio_file" id="audio_file" accept="audio/*" required>
+      <label class="input-group-text" for="audio_file">Upload</label>
     </div>
-    {% endif %}
+    <div class="input-group mb-3">
+      <span class="input-group-text">Prompt</span>
+      <textarea class="form-control" name="prompt" id="prompt" rows="4" required></textarea>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary btn-lg rounded-start active" id="twitter-thread-btn">Twitter Thread</button>
+        <button type="button" class="btn btn-primary btn-lg" id="blog-article-btn">Blog Article</button>
+        <button type="button" class="btn btn-primary btn-lg" id="mind-map-btn">Mind Map</button>
+        <button type="button" class="btn btn-primary btn-lg rounded-end" id="notes-btn">Notes</button>
+      </div>
+    </div>
+    <div class="d-grid gap-2">
+      <button type="submit" class="btn btn-primary btn-lg">Generate Content</button>
+    </div>
+  </form>
 </div>
 
+
 <!-- Bootstrap JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-DU6nFgn1zQ2QJwL6+OV3Ll8GJeqg+rMbsyYG1ryKjQ9B5h5eu5zgZ5w5xHcL3qFW" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-DU6nFgn1zQ2QJwL6+OV3Ll8GJeqg+rMbsyYG1ryKjQ9B5h5eu5zgZ5w5xHcL3qFW" crossorigin="anonymous"></script>
 
 </body>
 </html>
